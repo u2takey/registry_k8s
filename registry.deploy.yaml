@@ -1,0 +1,45 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  namespace: kube-system
+  name: registry-deploy
+  labels:
+    name: registry-deploy
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: registry-app
+    spec:
+     affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+              - "xs343"
+      containers:
+      - name: registry
+        image: registry:2.6
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 5000
+        - containerPort: 5001
+        volumeMounts:
+        - name: config
+          mountPath: /etc/docker/registry
+        - name: storage
+          mountPath: /registry
+      volumes:
+      - name: config
+        configMap:
+          name: registry-config
+          items:
+          - key: config
+            path: config.yml
+      - name: storage
+        persistentVolumeClaim:
+          claimName: registry-pvc
