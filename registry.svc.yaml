@@ -4,7 +4,7 @@ metadata:
   namespace: kube-system
   name: registry
 spec:
-  type: 
+  type: NodePort
   ports:
     - name: repo
       port: 5000
