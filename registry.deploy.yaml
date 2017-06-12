@@ -33,6 +33,8 @@ spec:
           items:
           - key: config
             path: config.yml
+          - key: htpasswd
+            path: reg.htpasswd
       - name: storage
         persistentVolumeClaim:
           claimName: registry-pvc
