@@ -24,8 +24,9 @@ data:
                 interval: 24h
                 dryrun: false
     auth:
-      realm: basic-realm
-      path: /etc/docker/registry/reg.htpasswd
+      htpasswd:
+        realm: basic-realm
+        path: /etc/docker/registry/reg.htpasswd
     http:
         addr: :5000
         secret: asecret_for_local_development
@@ -38,6 +39,7 @@ data:
         enabled: true
         interval: 10s
         threshold: 3
+
   htpasswd: |
     atlab:PWroKyYTybPqs
     pandora:W5/zAxSsFINgM
